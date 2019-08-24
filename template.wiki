@@ -1,0 +1,30 @@
+{{Version|Beyond}}
+{{Product infobox
+| image = µ£icon£µ
+| category = µ£Type£µ
+| type = µ£Subtitle£µ
+| used = 
+| value = 
+| release = Beyond
+}}
+'''µ£name£µ''' is a µ£type£µ.
+
+==Summary==
+'''µ£name£µ''' is a µ£typeLink£µ and one of the µ£subtitleLink£µs.
+
+==Game description==
+
+==Source==
+
+==Recipes==
+
+==Additional information==
+
+==Release history==
+* [[Beyond]] - Added as a µ£type£µ.
+
+==Gallery==
+<gallery>
+</gallery>
+
+[[Category:µ£Subtitle£µ]]
