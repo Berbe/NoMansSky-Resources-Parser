@@ -1,3 +1,7 @@
 {
-    "Tradeable": "Trade item"
+    "type": [
+        {
+            "Tradeable": "Trade item"
+        }
+    ]
 }
