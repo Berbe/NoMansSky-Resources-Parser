@@ -62,6 +62,10 @@ if(TEST) {
 $ingredients = [];
 $unlockables = [];
 
+$languageMishaps = [
+    'Curiousity' => 'Curiosity'
+];
+
 ##### List crafts requiring a blueprint #####
 
 $reader = new XMLReader();
@@ -125,6 +129,7 @@ while($reader->read()) {
     $temp = $xpath->query('./Property[@name="Type"]/Property[@name="ProductCategory"]');
     if($temp === FALSE || $temp->length !== 1) die("Error: Product does not have a Type property\n");
     $type = $temp->item(0)->attributes->getNamedItem('value')->value;
+    if(isset($languageMishaps[$type])) $type = $languageMishaps[$type];
 
 #    if(strstr($icon, 'TEXTURES/UI/FRONTEND/ICONS/COOKINGPRODUCTS') === FALSE) continue;
     if($type !== 'Consumable' || $subtitle !== 'FOOD_COOKED_SUB') continue;
@@ -318,6 +323,16 @@ foreach($translationFiles as $translationFile) {
 }
 
 echo 'Found '.count($strings)." translations\n";
+
+##### Correcting translations mishaps #####
+
+foreach($strings as $key => &$data) {
+    if(isset($languageMishaps[$data['translation']])) {
+        $data['translation'] = $languageMishaps[$data['translation']];
+        $data['manuallyModified'] = TRUE;
+    }
+}
+unset($data);
 
 ##### Combining items & translated strings #####
 
