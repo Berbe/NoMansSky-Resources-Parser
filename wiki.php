@@ -90,6 +90,7 @@ foreach($matches['tag'] as $match) {
 $types = array_unique($types);
 
 if(!file_exists('pages')) mkdir('pages');
+$generated = [];
 foreach($items as $id => $item) {
     $replacements = [];
     foreach($item as $key => $value) {
@@ -106,7 +107,13 @@ foreach($items as $id => $item) {
         return $replacements[$matches['tag']];
     }
     , $template);
-    file_put_contents('pages/'.$item['name'], $output);
+    $name = $item['name']."_$id";
+    file_put_contents("pages/$name", $output);
+    echo "Generated $name\n";
     if(DEBUG) var_dump($output);
+    $generated[] = $name;
 }
+echo 'Output '.count($generated)." items:\n";
+sort($generated);
+var_dump($generated);
 ?>
