@@ -13,6 +13,7 @@
 '''µ£name£µ''' is a µ£typeLink£µ and one of the µ£subtitleLink£µs.
 
 ==Game description==
+µ£description£µ
 
 ==Source==
 µ£recipes£µ

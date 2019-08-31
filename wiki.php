@@ -12,10 +12,6 @@ function makeLowerCaseLink($string) {
 
 function generateVariants(&$replacements, $type, $value) {
     switch($type) {
-        case 'name':
-            $replacements[$type] = $value;
-            break;
-
         case 'icon':
             $replacements[$type] = basename($value, '.DDS').'.png';
             break;
@@ -69,10 +65,15 @@ function generateVariants(&$replacements, $type, $value) {
             $replacements[$type] = rtrim($recipes);
             break;
 
-        default:
+        case 'type':
+        case 'subtitle':
             $replacements[ucfirst($type)] = $value;
             $replacements[$type] = strtolower($value);
             $replacements[$type.'Link'] = makeLowerCaseLink($value);
+            break;
+
+        default:
+            $replacements[$type] = $value;
     }
 }
 

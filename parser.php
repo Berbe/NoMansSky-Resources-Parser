@@ -114,6 +114,10 @@ while($reader->read()) {
     if($temp === FALSE || $temp->length !== 1) die("Error: Product does not have a Subtitle property\n");
     $subtitle = $temp->item(0)->attributes->getNamedItem('value')->value;
 
+    $temp = $xpath->query('./Property[@name="Description"]/Property[@name="Value"]');
+    if($temp === FALSE || $temp->length !== 1) die("Error: Product does not have a Description property\n");
+    $description = $temp->item(0)->attributes->getNamedItem('value')->value;
+
     $temp = $xpath->query('./Property[@name="Icon"]/Property[@name="Filename"]');
     if($temp === FALSE || $temp->length !== 1) die("Error: Product does not have an Icon property\n");
     $icon = $temp->item(0)->attributes->getNamedItem('value')->value;
@@ -132,6 +136,9 @@ while($reader->read()) {
 
     $itemsTransient[$id]['subtitle'] = $subtitle;
     $stringsRaw[$subtitle] = [];
+
+    $itemsTransient[$id]['description'] = $description;
+    $stringsRaw[$description] = [];
 
     $itemsTransient[$id]['icon'] = $icon;
     $itemsTransient[$id]['type'] = $type;
@@ -273,6 +280,8 @@ echo 'Loaded '.count($itemsTransient).' items, '.count($stringsRaw).' strings & 
 
 ##### Searching for translations #####
 
+$strings = [];
+
 foreach($translationFiles as $translationFile) {
     $reader->open($translationFile);
     while($reader->read()) {
@@ -303,8 +312,12 @@ foreach($translationFiles as $translationFile) {
             unset($stringsRaw[$key]);
             if(DEBUG >= 2) echo "Translation: $key -> $translation\n";
         }
+
+        if(!$stringsRaw) break 2;
     }
 }
+
+echo 'Found '.count($strings)." translations\n";
 
 ##### Combining items & translated strings #####
 
@@ -321,6 +334,7 @@ foreach($itemsTransient as $key => $item) {
     if($item['type'] !== 'Consumable' || $item['subtitle'] !== 'BAIT_MEAT_SUB') continue;*/
 
     $item['subtitle'] = $strings[$item['subtitle']]['translation'];
+    $item['description'] = $strings[$item['description']]['translation'];
 /*    $name = $item['name'];
     unset($item['name']);
     $items[$strings[$name]['translation']] = $item;*/
